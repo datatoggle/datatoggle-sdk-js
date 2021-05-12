@@ -1,0 +1,17 @@
+{
+  "name": "datatoggle-interface",
+  "version": "1.0.0",
+  "description": "Datatoggle interface to be implemented by integrations",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^7.25.0",
+    "eslint-config-prettier": "^8.3.0",
+    "prettier": "^2.2.1",
+    "typescript": "^4.2.4"
+  }
+}

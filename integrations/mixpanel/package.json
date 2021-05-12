@@ -1,0 +1,23 @@
+{
+  "name": "datatoggle-integration-mixpanel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/mixpanel-browser": "^2.35.6",
+    "eslint": "^7.25.0",
+    "eslint-config-prettier": "^8.3.0",
+    "prettier": "^2.2.1",
+    "typescript": "^4.2.4"
+  },
+  "dependencies": {
+    "datatoggle-interface": "file:../../interface",
+    "mixpanel-browser": "^2.41.0"
+  }
+}
