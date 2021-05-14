@@ -43,7 +43,7 @@ export class Analytics {
   destinations: DatatoggleIntegration[] = []
 
   async init(apiKey: string): Promise<void> {
-    const mixpanel = await import("/Users/nicolas/dev/datatoggle/datatoggle-sdk-js/integrations/mixpanel/lib/index.js");
+    const mixpanel = await import("https://cdn.jsdelivr.net/npm/@datatoggle/datatoggle-mixpanel/dist/datatoggle-mixpanel.js");
     const datatoggleMixpanel: DatatoggleIntegration = mixpanel.DatatoggleMixpanel as unknown as DatatoggleIntegration
     this.destinations.push(datatoggleMixpanel)
   }
