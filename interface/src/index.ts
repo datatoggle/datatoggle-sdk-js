@@ -36,9 +36,9 @@ export class Properties {
 
 }
 
-export interface DatatoggleIntegration {
-  init(config: object): void
+export interface DatatoggleDestination {
+  init(config: object): Promise<void> // return true if init is ok
   identify(userId: string, traits: Traits): void
   track(event: string, properties: Properties): void
-  page(category: string | null, name: string | null, properties: Properties): void
+  page(name: string, category: string | null, properties: Properties): void
 }
