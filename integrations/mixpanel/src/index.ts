@@ -1,14 +1,18 @@
 import mixpanel from 'mixpanel-browser'
-import {DatatoggleIntegration, Properties, Traits} from 'datatoggle-interface'
+import {DatatoggleDestination, Properties, Traits} from 'datatoggle-interface'
 
 type MixpanelConfig = {
   project_token: string
   eu_residency: number
 }
 
-export class DatatoggleMixpanel implements DatatoggleIntegration {
+export function buildDestination() : DatatoggleDestination {
+  return new DatatoggleMixpanel()
+}
 
-  init(config: object): void {
+class DatatoggleMixpanel implements DatatoggleDestination {
+
+  init(config: object): Promise<void> {
     const mixpanelConfig: MixpanelConfig = config as MixpanelConfig
     const token: string = mixpanelConfig.project_token
     let mixpanelParams = {}
@@ -18,6 +22,7 @@ export class DatatoggleMixpanel implements DatatoggleIntegration {
       }
     }
     mixpanel.init(token, mixpanelParams)
+    return Promise.resolve()
   }
 
   identify(userId: string, traits: Traits): void {
@@ -25,12 +30,12 @@ export class DatatoggleMixpanel implements DatatoggleIntegration {
     mixpanel.people.set(traits)
   }
 
-  page(category: string | null, name: string | null, properties: Properties): void {
+  page(name: string, category: string | null, properties: Properties): void {
     mixpanel.track(
       "Loaded a Page",
       {
-        category: category,
         name: name,
+        category: category,
         ...properties
       }
     )
