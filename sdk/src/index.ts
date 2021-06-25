@@ -1,71 +1,57 @@
-import {Properties as IntProperties, Traits as IntTraits, DatatoggleIntegration} from 'datatoggle-interface'
-
-export class Address {
-  city?: string
-  country?: string
-}
-
-export class Company {
-  name?: string
-  id?: string
-  industry?: string
-  employee_count?: number
-  plan?: string
-}
-
-export class Traits {
-  address?: Address
-  age?: number
-  avatar?: string
-  birthday?: Date
-  company?: Company
-  createdAt?: Date
-  description?: string
-  email?: string
-  firstName?: string
-  gender?: string
-  id?: string
-  lastname?: string
-  name?: string
-  phone?: string
-  title?: string
-  username?: string
-  website?: string
-}
-
-export class Properties {
-}
+import {Properties as DestProperties, Traits as DestTraits} from 'datatoggle-interface'
+import {Properties, Traits} from './api_data'
+import {ConfigReply, DestinationConfig, GlobalConfig} from './config'
+import {DestinationWrapper} from './destination_wrapper'
 
 
-// https://www.npmjs.com/package/load-script
-export class Analytics {
+class Datatoggle {
 
-  destinations: DatatoggleIntegration[] = []
+  destinations: DestinationWrapper[] = []
 
-  async init(apiKey: string): Promise<void> {
-    const mixpanel = await import("https://cdn.jsdelivr.net/npm/@datatoggle/datatoggle-mixpanel/dist/datatoggle-mixpanel.js");
-    const datatoggleMixpanel: DatatoggleIntegration = mixpanel.DatatoggleMixpanel as unknown as DatatoggleIntegration
-    this.destinations.push(datatoggleMixpanel)
+  init(apiKey: string){
+
+    if (!apiKey){
+      throw new Error("apiKey should not be null")
+    }
+
+    this._init(apiKey).then(r => "Datatoggle init completed")
   }
 
-  identify(userId?: string, traits?: Traits): void {
-    const destTraits = traits as IntTraits
-    this.destinations.find( (destination: DatatoggleIntegration) => {
-      destination.identify(userId!!, destTraits)
+  private async _init(apiKey: string): Promise<void> {
+
+    const response: Response = await fetch(`https://config.datatoggle.workers.dev/${apiKey}`)
+    if(response.ok){
+      const reply: ConfigReply = await response.json()
+      let config: GlobalConfig = reply.config as GlobalConfig
+      this.destinations = config.destinations.map((dc: DestinationConfig) => new DestinationWrapper(dc))
+      this.destinations.forEach(d => d.init())
+    } else {
+      throw new Error(`error loading datatoggle config: '${response.statusText}'`)
+    }
+  }
+
+  identify(userId: string, traits?: Traits): void {
+    const destTraits = traits || {} as DestTraits
+    this.destinations.forEach( (destination: DestinationWrapper) => {
+      destination.identify(userId, destTraits)
     })
   }
 
   track(event: string, properties?: Properties): void {
-    const intProps = properties as IntProperties
-    this.destinations.find( (destination: DatatoggleIntegration) => {
-      destination.track(event, intProps)
+    const destProps = properties || {} as DestProperties
+    this.destinations.forEach( (destination: DestinationWrapper) => {
+      destination.track(event, destProps)
     })
   }
 
-  page(category?: string, name?: string, properties?: Properties): void {
-
+  page(name: string, category?: string, properties?: Properties): void {
+    const destProps = properties || {} as DestProperties
+    this.destinations.forEach( (destination: DestinationWrapper) => {
+      destination.page(name, category || null, destProps)
+    })
   }
 
 }
 
-export const analytics: Analytics = new Analytics()
+const datatoggle: Datatoggle = new Datatoggle()
+export default datatoggle
