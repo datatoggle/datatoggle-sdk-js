@@ -1,7 +1,7 @@
 import {DatatoggleDestination, Properties, Traits} from 'datatoggle-interface'
 
 type SegmentConfig = {
- writeKey: string
+  write_key: string
 }
 
 export function buildDestination() : DatatoggleDestination {
@@ -12,7 +12,7 @@ class DatatoggleSegment implements DatatoggleDestination {
 
   init(config: object): Promise<void> {
     const segmentConfig: SegmentConfig = config as SegmentConfig
-    const writeKey: string = segmentConfig.writeKey;
+    const writeKey: string = segmentConfig.write_key;
     // from
     (function(){
       // Create a queue, but don't obliterate an existing one!
