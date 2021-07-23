@@ -40,11 +40,11 @@ export class DestinationWrapper {
   }
 
   private async initOnScriptLoaded(){
-    // @ts-ignore
-    const res = window[this.destConfig.scriptName]
-    // @ts-ignore
-    const dest: DatatoggleDestination = res.buildDestination() as unknown as DatatoggleDestination
     try {
+      // @ts-ignore
+      const res = window[this.destConfig.scriptName]
+      // @ts-ignore
+      const dest: DatatoggleDestination = res.buildDestination() as unknown as DatatoggleDestination
       await dest.init(this.destConfig.destinationSpecificConfig);
       (this.destination as WaitingDestination).flushEvents(dest)
       this.destination = dest
