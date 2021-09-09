@@ -49,7 +49,7 @@ export class DestinationWrapper {
       (this.destination as WaitingDestination).flushEvents(dest)
       this.destination = dest
     } catch (e) {
-      console.warn(`Destination ${this.destConfig.name} could not be loaded bu Datatoggle`)
+      console.warn(`Destination ${this.destConfig.name} could not be loaded by Datatoggle`)
       this.destination = new KoDestination()
     }
   }
