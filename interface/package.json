@@ -1,7 +1,7 @@
 {
-  "name": "datatoggle-interface",
+  "name": "@datatoggle/destination-interface",
   "version": "1.0.0",
-  "description": "Datatoggle interface to be implemented by integrations",
+  "description": "Datatoggle interface to be implemented by destinations",
   "main": "lib/index.js",
   "scripts": {
     "build": "tsc"

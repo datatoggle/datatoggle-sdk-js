@@ -1,4 +1,4 @@
-import {Properties as DestProperties, Traits as DestTraits} from 'datatoggle-interface'
+import {Properties as DestProperties, Traits as DestTraits} from '@datatoggle/destination-interface'
 import {Properties, Traits} from './api_data'
 import {ConfigReply, DestinationConfig, GlobalConfig} from './config'
 import {DestinationWrapper} from './destination_wrapper'
@@ -30,10 +30,10 @@ class Datatoggle {
     }
   }
 
-  identify(userId: string, traits?: Traits): void {
+  identify(userId?: string, traits?: Traits): void {
     const destTraits = traits || {} as DestTraits
     this.destinations.forEach( (destination: DestinationWrapper) => {
-      destination.identify(userId, destTraits)
+      destination.identify(userId || null, destTraits)
     })
   }
 
@@ -44,10 +44,17 @@ class Datatoggle {
     })
   }
 
-  page(name: string, category?: string, properties?: Properties): void {
+  page(categoryOrName?: string, name?: string, properties?: Properties): void {
+    let category: string | null
+    if (categoryOrName && !name){
+      name = categoryOrName
+      category = null
+    } else {
+      category = categoryOrName || null
+    }
     const destProps = properties || {} as DestProperties
     this.destinations.forEach( (destination: DestinationWrapper) => {
-      destination.page(name, category || null, destProps)
+      destination.page(category, name || null, destProps)
     })
   }
 

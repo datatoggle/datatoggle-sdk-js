@@ -1,1 +1,1 @@
-./node_modules/http-server/bin/http-server ~/dev/datatoggle/datatoggle-sdk-js/integrations/ -p 8077
+./node_modules/http-server/bin/http-server ~/dev/datatoggle/datatoggle-sdk-js/destinations/ -p 8077

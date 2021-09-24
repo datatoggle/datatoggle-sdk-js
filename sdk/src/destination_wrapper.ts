@@ -54,12 +54,12 @@ export class DestinationWrapper {
     }
   }
 
-  identify(userId: string, traits: Traits): void {
+  identify(userId: string | null, traits: Traits): void {
     this.destination.identify(userId, traits)
   }
 
-  page(name: string, category: string | null, properties: Properties): void {
-    this.destination.page(name, category, properties)
+  page(category: string | null, name: string | null, properties: Properties): void {
+    this.destination.page(category, name, properties)
   }
 
   track(event: string, properties: Properties): void {
