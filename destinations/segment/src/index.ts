@@ -112,8 +112,12 @@ class DatatoggleSegment implements DatatoggleDestination {
     return Promise.resolve()
   }
 
-  identify(userId: string, traits: Traits): void {
-    analytics.identify(userId, traits)
+  identify(userId: string | null, traits: Traits): void {
+    if (userId){
+      analytics.identify(userId, traits)
+    } else {
+      analytics.identify(traits)
+    }
   }
 
   page(category: string | null, name: string | null, properties: Properties): void {
