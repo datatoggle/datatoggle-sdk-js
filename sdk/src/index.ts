@@ -31,6 +31,9 @@ class Datatoggle {
   }
 
   identify(userId?: string, traits?: Traits): void {
+    if (!userId && !traits){
+      throw new Error(`either userId or traits should be set`)
+    }
     const destTraits = traits || {} as DestTraits
     this.destinations.forEach( (destination: DestinationWrapper) => {
       destination.identify(userId || null, destTraits)
