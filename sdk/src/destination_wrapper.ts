@@ -22,7 +22,7 @@ class KoDestination implements DatatoggleDestination {
 }
 
 export class DestinationWrapper {
-  initCalled: boolean = false
+  debug: boolean = false
   destConfig: DestinationConfig
   destination: DatatoggleDestination = new WaitingDestination()
 
@@ -30,9 +30,8 @@ export class DestinationWrapper {
     this.destConfig = destConfig
   }
 
-  init() {
-    if (this.initCalled) return
-    this.initCalled = true
+  init(debug: boolean) {
+    this.debug = debug
 
     $script(this.destConfig.scriptUrl, async () => {
       await this.initOnScriptLoaded()
@@ -46,6 +45,9 @@ export class DestinationWrapper {
       // @ts-ignore
       const dest: DatatoggleDestination = res.buildDestination() as unknown as DatatoggleDestination
       await dest.init(this.destConfig.destinationSpecificConfig);
+      if (this.debug){
+        console.debug(`[Datatoggle] Destination ${this.destConfig.name} initialized`)
+      }
       (this.destination as WaitingDestination).flushEvents(dest)
       this.destination = dest
     } catch (e) {
