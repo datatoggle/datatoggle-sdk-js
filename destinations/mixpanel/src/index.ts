@@ -25,12 +25,12 @@ class DatatoggleMixpanel implements DatatoggleDestination {
     return Promise.resolve()
   }
 
-  identify(userId: string, traits: Traits): void {
-    mixpanel.identify(userId)
+  identify(userId: string | null, traits: Traits): void {
+    mixpanel.identify(userId || undefined)
     mixpanel.people.set(traits)
   }
 
-  page(name: string, category: string | null, properties: Properties): void {
+  page(category: string | null, name: string | null, properties: Properties): void {
     mixpanel.track(
       "Loaded a Page",
       {
