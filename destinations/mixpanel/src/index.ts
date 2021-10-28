@@ -3,7 +3,7 @@ import {DatatoggleDestination, Properties, Traits} from 'datatoggle-interface'
 
 type MixpanelConfig = {
   project_token: string
-  eu_residency: number
+  config: object
 }
 
 export function buildDestination() : DatatoggleDestination {
@@ -15,13 +15,7 @@ class DatatoggleMixpanel implements DatatoggleDestination {
   init(config: object): Promise<void> {
     const mixpanelConfig: MixpanelConfig = config as MixpanelConfig
     const token: string = mixpanelConfig.project_token
-    let mixpanelParams = {}
-    if (mixpanelConfig.eu_residency){
-      mixpanelParams = {
-        api_host: "https://api-eu.mixpanel.com",
-      }
-    }
-    mixpanel.init(token, mixpanelParams)
+    mixpanel.init(token, mixpanelConfig.config)
     return Promise.resolve()
   }
 
@@ -44,7 +38,5 @@ class DatatoggleMixpanel implements DatatoggleDestination {
   track(event: string, properties: Properties): void {
     mixpanel.track(event, properties)
   }
-
-
 
 }
