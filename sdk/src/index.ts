@@ -17,11 +17,10 @@ class Datatoggle {
       throw new Error("apiKey should not be null")
     }
     if (this.initCalled){
-      this.initCalled = true
       if (this.options.debug) {
         console.debug('[Datatoggle] init already called')
-        return
       }
+      return
     }
     this._init(apiKey).then(() => "Datatoggle init completed")
   }
