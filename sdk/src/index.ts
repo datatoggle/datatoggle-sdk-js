@@ -5,7 +5,16 @@ import {DestinationWrapper} from './destination_wrapper'
 import {Options} from './options'
 
 
-class Datatoggle {
+interface Datatoggle {
+
+  init(apiKey: string, options?: Options): void
+  identify(userId?: string, traits?: Traits): void
+  track(event: string, properties?: Properties): void
+  page(name?: string, properties?: Properties): void
+  page(category: string, name: string, propertiesWithCat?: Properties): void
+}
+
+class DatatoggleImpl implements Datatoggle {
 
   private initCalled: boolean = false
   private destinations: DestinationWrapper[] = []
@@ -43,7 +52,7 @@ class Datatoggle {
       throw new Error(`either userId or traits should be set`)
     }
     if (this.options.debug){
-      console.debug(`[Datatoggle] identify '${userId}/${traits}'`)
+      console.debug(`[Datatoggle] identify '${userId}'`)
     }
     const destTraits = traits || {} as DestTraits
     this.destinations.forEach( (destination: DestinationWrapper) => {
@@ -61,16 +70,32 @@ class Datatoggle {
     })
   }
 
-  page(categoryOrName?: string, name?: string, properties?: Properties): void {
+  page(
+    categoryOrName?: string,
+    nameOrProperties?: Properties | string,
+    propertiesIfCat?: Properties): void {
+
     let category: string | null
-    if (categoryOrName && !name){
-      name = categoryOrName
+    let name: string | null
+    let properties: Properties | null
+
+    if (!nameOrProperties){
+      // if second param is null, it's properties because name is mandatory when category is set
       category = null
-    } else {
-      category = categoryOrName || null
+      name = categoryOrName || null
+      properties = null
+    } else if (typeof nameOrProperties === "string"){
+      category = categoryOrName as string
+      name = nameOrProperties
+      properties = propertiesIfCat || null
+    } else { // nameOrProperties is Properties
+      category = null
+      name = categoryOrName || null
+      properties = nameOrProperties
     }
+
     if (this.options.debug){
-      console.debug(`[Datatoggle] page '${category}/${name}'`)
+      console.debug(`[Datatoggle] page '${name}'`)
     }
     const destProps = properties || {} as DestProperties
     this.destinations.forEach( (destination: DestinationWrapper) => {
@@ -78,8 +103,10 @@ class Datatoggle {
     })
   }
 
+
 }
 
-const datatoggle: Datatoggle = new Datatoggle()
+
+const datatoggle: Datatoggle = new DatatoggleImpl()
 export default datatoggle
 export {Options}
