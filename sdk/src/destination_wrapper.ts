@@ -2,24 +2,8 @@ import {DestinationConfig} from './config'
 import {DatatoggleDestination} from '../../interface'
 import {WaitingDestination} from './waiting_destination'
 import {Properties, Traits} from './api_data'
+import {KoDestination} from './ko_destination'
 import $script = require('scriptjs')
-
-class KoDestination implements DatatoggleDestination {
-
-  async init(config: object): Promise<void> {
-    return Promise.resolve()
-  }
-
-  identify(userId: string, traits: Traits): void {
-  }
-
-  page(name: string, category: string | null, properties: Properties): void {
-  }
-
-  track(event: string, properties: Properties): void {
-  }
-
-}
 
 export class DestinationWrapper {
   debug: boolean = false
@@ -38,6 +22,12 @@ export class DestinationWrapper {
     })
   }
 
+  private logError(exception: any, call: string, event: string | null): void {
+    console.warn(`[Datatoggle] '${call}(${event})' failed for destination '${this.destConfig.name}'.
+    Exception: '${exception}'
+    `)
+  }
+
   private async initOnScriptLoaded(){
     try {
       // @ts-ignore
@@ -51,21 +41,34 @@ export class DestinationWrapper {
       (this.destination as WaitingDestination).flushEvents(dest)
       this.destination = dest
     } catch (e) {
-      console.warn(`Destination ${this.destConfig.name} could not be loaded by Datatoggle`)
+      this.logError(e,'init',null);
       this.destination = new KoDestination()
     }
   }
 
   identify(userId: string | null, traits: Traits): void {
-    this.destination.identify(userId, traits)
+    try {
+      this.destination.identify(userId, traits)
+    } catch (e) {
+      this.logError(e,'identify',userId);
+    }
+
   }
 
   page(category: string | null, name: string | null, properties: Properties): void {
-    this.destination.page(category, name, properties)
+    try {
+      this.destination.page(category, name, properties)
+    } catch (e) {
+      this.logError(e,'page',name||category);
+    }
   }
 
   track(event: string, properties: Properties): void {
-    this.destination.track(event, properties)
+    try {
+      this.destination.track(event, properties)
+    } catch (e) {
+      this.logError(e,'track',event);
+    }
   }
 
 }
