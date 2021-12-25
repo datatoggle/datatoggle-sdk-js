@@ -1,11 +1,12 @@
 {
   "name": "@datatoggle/mixpanel",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "description": "Datatoggle integration of mixpanel",
   "main": "dist/index.js",
   "scripts": {
     "build": "rollup -c",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "npm publish --access public"
   },
   "author": "",
   "license": "ISC",
