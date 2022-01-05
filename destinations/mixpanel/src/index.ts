@@ -2,7 +2,7 @@ import mixpanel from 'mixpanel-browser'
 import {DatatoggleDestination, Properties, Traits} from 'datatoggle-interface'
 
 type MixpanelConfig = {
-  project_token: string
+  token: string
   config: object
 }
 
@@ -14,7 +14,7 @@ class DatatoggleMixpanel implements DatatoggleDestination {
 
   init(config: object): Promise<void> {
     const mixpanelConfig: MixpanelConfig = config as MixpanelConfig
-    const token: string = mixpanelConfig.project_token
+    const token: string = mixpanelConfig.token
     mixpanel.init(token, mixpanelConfig.config)
     return Promise.resolve()
   }
