@@ -1,9 +1,9 @@
-export class Address {
+export interface Address {
   city?: string
   country?: string
 }
 
-export class Company {
+export interface Company {
   name?: string
   id?: string
   industry?: string
@@ -11,7 +11,7 @@ export class Company {
   plan?: string
 }
 
-export class Traits {
+export interface Traits {
   address?: Address
   age?: number
   avatar?: string
@@ -29,7 +29,9 @@ export class Traits {
   title?: string
   username?: string
   website?: string
+  [key: string]: unknown
 }
 
-export class Properties {
+export interface Properties {
+  [key: string]: unknown;
 }

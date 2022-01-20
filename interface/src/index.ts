@@ -30,9 +30,11 @@ export interface DestTraits {
   title?: string
   username?: string
   website?: string
+  [key: string]: unknown
 }
 
 export interface DestProperties {
+  [key: string]: unknown
 }
 
 export interface DatatoggleDestination {
