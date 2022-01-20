@@ -11,10 +11,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@datatoggle/destination-interface": "file:../../interface",
     "@rollup/plugin-commonjs": "^19.0.0",
     "@rollup/plugin-node-resolve": "^13.0.0",
     "@types/mixpanel-browser": "^2.35.6",
-    "datatoggle-interface": "file:../../interface",
     "eslint": "^7.25.0",
     "eslint-config-prettier": "^8.3.0",
     "prettier": "^2.2.1",
