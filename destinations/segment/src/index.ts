@@ -1,4 +1,4 @@
-import {DatatoggleDestination, Properties, Traits} from '@datatoggle/destination-interface'
+import {DatatoggleDestination, DestProperties, DestTraits} from '@datatoggle/destination-interface'
 
 type SegmentConfig = {
   write_key: string
@@ -112,7 +112,7 @@ class DatatoggleSegment implements DatatoggleDestination {
     return Promise.resolve()
   }
 
-  identify(userId: string | null, traits: Traits): void {
+  identify(userId: string | null, traits: DestTraits): void {
     if (userId){
       analytics.identify(userId, traits)
     } else {
@@ -120,11 +120,11 @@ class DatatoggleSegment implements DatatoggleDestination {
     }
   }
 
-  page(category: string | null, name: string | null, properties: Properties): void {
+  page(category: string | null, name: string | null, properties: DestProperties): void {
     analytics.page(category || undefined, name || undefined, properties)
   }
 
-  track(event: string, properties: Properties): void {
+  track(event: string, properties: DestProperties): void {
     analytics.track(event, properties)
   }
 

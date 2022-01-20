@@ -1,5 +1,4 @@
-import {Properties, Traits} from './api_data'
-import {DatatoggleDestination} from '../../interface'
+import {DestProperties, DatatoggleDestination, DestTraits} from '@datatoggle/destination-interface'
 
 interface WaitingEvent {
   send(destination: DatatoggleDestination): void
@@ -7,9 +6,9 @@ interface WaitingEvent {
 
 class IdentifyEvent implements WaitingEvent {
   userId: string
-  traits: Traits
+  traits: DestTraits
 
-  constructor(userId: string, traits: Traits) {
+  constructor(userId: string, traits: DestTraits) {
     this.userId = userId
     this.traits = traits
   }
@@ -22,9 +21,9 @@ class IdentifyEvent implements WaitingEvent {
 class PageEvent implements WaitingEvent {
   name: string
   category: string | null
-  properties: Properties
+  properties: DestProperties
 
-  constructor(name: string, category: string | null, properties: Properties) {
+  constructor(name: string, category: string | null, properties: DestProperties) {
     this.category = category
     this.name = name
     this.properties = properties
@@ -37,9 +36,9 @@ class PageEvent implements WaitingEvent {
 
 class TrackEvent implements WaitingEvent {
   event: string
-  properties: Properties
+  properties: DestProperties
 
-  constructor(event: string, properties: Properties) {
+  constructor(event: string, properties: DestProperties) {
     this.event = event
     this.properties = properties
   }
@@ -58,15 +57,15 @@ export class WaitingDestination implements DatatoggleDestination {
     return Promise.resolve()
   }
 
-  identify(userId: string, traits: Traits): void {
+  identify(userId: string, traits: DestTraits): void {
     this.waitingEvents.push(new IdentifyEvent(userId, traits))
   }
 
-  page(name: string, category: string | null, properties: Properties): void {
+  page(name: string, category: string | null, properties: DestProperties): void {
     this.waitingEvents.push(new PageEvent(name, category, properties))
   }
 
-  track(event: string, properties: Properties): void {
+  track(event: string, properties: DestProperties): void {
     this.waitingEvents.push(new TrackEvent(event, properties))
   }
 

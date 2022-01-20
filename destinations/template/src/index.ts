@@ -1,4 +1,4 @@
-import {DatatoggleDestination, Properties, Traits} from 'datatoggle-interface'
+import {DatatoggleDestination, DestProperties, DestTraits} from '@datatoggle/destination-interface'
 
 type ${Destination}Config = {
  // TODO
@@ -15,15 +15,15 @@ class Datatoggle${Destination} implements DatatoggleDestination {
     // TODO
   }
 
-  identify(userId: string, traits: Traits): void {
+  identify(userId: string, traits: DestTraits): void {
     // TODO
   }
 
-  page(name: string, category: string | null, properties: Properties): void {
+  page(name: string, category: string | null, properties: DestProperties): void {
     // TODO
   }
 
-  track(event: string, properties: Properties): void {
+  track(event: string, properties: DestProperties): void {
     // TODO
   }
 

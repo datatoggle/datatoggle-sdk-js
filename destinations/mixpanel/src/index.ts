@@ -1,5 +1,5 @@
 import mixpanel from 'mixpanel-browser'
-import {DatatoggleDestination, Properties, Traits} from 'datatoggle-interface'
+import {DatatoggleDestination, DestProperties, DestTraits} from '@datatoggle/destination-interface'
 
 type MixpanelConfig = {
   token: string
@@ -19,12 +19,12 @@ class DatatoggleMixpanel implements DatatoggleDestination {
     return Promise.resolve()
   }
 
-  identify(userId: string | null, traits: Traits): void {
+  identify(userId: string | null, traits: DestTraits): void {
     mixpanel.identify(userId || undefined)
     mixpanel.people.set(traits)
   }
 
-  page(category: string | null, name: string | null, properties: Properties): void {
+  page(category: string | null, name: string | null, properties: DestProperties): void {
     mixpanel.track(
       "Loaded a Page",
       {
@@ -35,7 +35,7 @@ class DatatoggleMixpanel implements DatatoggleDestination {
     )
   }
 
-  track(event: string, properties: Properties): void {
+  track(event: string, properties: DestProperties): void {
     mixpanel.track(event, properties)
   }
 

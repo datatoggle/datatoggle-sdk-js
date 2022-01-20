@@ -1,4 +1,4 @@
-import {Properties as DestProperties, Traits as DestTraits} from '@datatoggle/destination-interface'
+import {DestProperties, DestTraits} from '@datatoggle/destination-interface'
 import {Properties, Traits} from './api_data'
 import {ConfigReply, DestinationConfig, GlobalConfig} from './config'
 import {DestinationWrapper} from './destination_wrapper'

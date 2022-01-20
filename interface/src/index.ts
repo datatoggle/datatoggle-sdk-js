@@ -1,10 +1,10 @@
 
-export class Address {
+export interface DestAddress {
   city?: string
   country?: string
 }
 
-export class Company {
+export interface DestCompany {
   name?: string
   id?: string
   industry?: string
@@ -12,12 +12,12 @@ export class Company {
   plan?: string
 }
 
-export class Traits {
-  address?: Address
+export interface DestTraits {
+  address?: DestAddress
   age?: number
   avatar?: string
   birthday?: Date
-  company?: Company
+  company?: DestCompany
   createdAt?: Date
   description?: string
   email?: string
@@ -32,13 +32,12 @@ export class Traits {
   website?: string
 }
 
-export class Properties {
-
+export interface DestProperties {
 }
 
 export interface DatatoggleDestination {
   init(config: object): Promise<void> // return true if init is ok
-  identify(userId: string | null, traits: Traits): void
-  track(event: string, properties: Properties): void
-  page(category: string | null, name: string | null, properties: Properties): void
+  identify(userId: string | null, traits: DestTraits): void
+  track(event: string, properties: DestProperties): void
+  page(category: string | null, name: string | null, properties: DestProperties): void
 }
