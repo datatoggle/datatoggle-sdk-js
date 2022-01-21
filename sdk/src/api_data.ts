@@ -23,7 +23,7 @@ export interface Traits {
   firstName?: string
   gender?: string
   id?: string
-  lastname?: string
+  lastName?: string
   name?: string
   phone?: string
   title?: string
