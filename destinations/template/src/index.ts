@@ -10,12 +10,16 @@ export function buildDestination() : DatatoggleDestination {
 
 class Datatoggle__Destination__ implements DatatoggleDestination {
 
+  // TODO REMOVE
+  userId: string | undefined
+
   init(config: object): Promise<void> {
     const __destination__Config: __Destination__Config = config as __Destination__Config
     return Promise.resolve()
   }
 
   identify(userId: string, traits: DestTraits): void {
+    this.userId = userId // TODO REMOVE
     // TODO
   }
 
