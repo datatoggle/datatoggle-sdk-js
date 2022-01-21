@@ -1,7 +1,7 @@
 {
-  "name": "@datatoggle/${destination}",
+  "name": "@datatoggle/__destination__",
   "version": "1.0.0",
-  "description": "Datatoggle integration of ${destination}",
+  "description": "Datatoggle integration of __destination__",
   "main": "dist/index.js",
   "scripts": {
     "build": "rollup -c",
