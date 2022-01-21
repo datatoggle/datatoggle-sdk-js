@@ -1,5 +1,6 @@
 import mixpanel from 'mixpanel-browser'
 import {DatatoggleDestination, DestProperties, DestTraits} from '@datatoggle/destination-interface'
+import {toMixpanelPeople} from './identify_mapping'
 
 type MixpanelConfig = {
   token: string
@@ -21,7 +22,8 @@ class DatatoggleMixpanel implements DatatoggleDestination {
 
   identify(userId: string | null, traits: DestTraits): void {
     mixpanel.identify(userId || undefined)
-    mixpanel.people.set(traits)
+    const mixpanelPeople = toMixpanelPeople(traits)
+    mixpanel.people.set(mixpanelPeople)
   }
 
   page(category: string | null, name: string | null, properties: DestProperties): void {
