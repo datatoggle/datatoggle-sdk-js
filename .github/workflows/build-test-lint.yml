@@ -1,0 +1,33 @@
+name: build-test-lint
+on: [push]
+jobs:
+  sdk:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./sdk
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 15
+      -run: npm
+      - run: npm install
+      - run: npm run build
+  destination:
+    strategy:
+      matrix:
+        destination_name: ['mixpanel', 'segment']
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./destinations/${{ matrix.destination_name }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 15
+      - run: npm install
+      - run: npm run build
+
+
