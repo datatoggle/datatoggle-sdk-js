@@ -14,5 +14,5 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 15
-      - run: git checkout -b version/${{ inputs.version }}
+      - run: git checkout -b version/${{ github.event.inputs.version }}
       - run: git push -u origin
