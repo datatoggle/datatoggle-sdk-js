@@ -1,9 +1,11 @@
 name: new-version
-on: workflow_dispatch
-  inputs:
-    version:
-      required: true
-      type: string
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: version of the npm package you want to deploy
+        required: true
+        type: string
 jobs:
   create-branch:
     runs-on: ubuntu-latest
