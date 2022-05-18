@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./sdk
+        working-directory: sdk
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./destinations/${{ matrix.destination_name }}
+        working-directory: destinations/${{ matrix.destination_name }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
