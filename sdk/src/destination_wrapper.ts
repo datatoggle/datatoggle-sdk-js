@@ -1,9 +1,9 @@
 import {DestinationConfig} from './config'
-import {DatatoggleDestination} from '../../interface'
 import {WaitingDestination} from './waiting_destination'
 import {Properties, Traits} from './api_data'
 import {KoDestination} from './ko_destination'
 import $script = require('scriptjs')
+import {DatatoggleDestination} from '@datatoggle/destination-interface'
 
 export class DestinationWrapper {
   debug: boolean = false
