@@ -1,0 +1,16 @@
+name: new-version
+on: workflow_dispatch
+  inputs:
+    version:
+      required: true
+      type: string
+jobs:
+  create-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 15
+      - run: git checkout -b version/${{ inputs.version }}
+      - run: git push -u origin
