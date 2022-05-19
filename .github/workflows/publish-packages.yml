@@ -16,6 +16,7 @@ jobs:
           node-version: 15
       - run: git checkout -b version/${{ github.event.inputs.version }}
       - run: ./.github/scripts/set_packages_version.sh ${{ github.event.inputs.version }}
+      - run: git commit -a -m ".github/workflows/publish-packages -> Set packages version to ${{ github.event.inputs.version }}"
       - run: git push --set-upstream origin version/${{ github.event.inputs.version }}
 
 
