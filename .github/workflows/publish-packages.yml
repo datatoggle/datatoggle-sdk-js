@@ -1,4 +1,4 @@
-name: new-version
+name: publish-packages
 on:
   workflow_dispatch:
     inputs:
@@ -7,7 +7,7 @@ on:
         required: true
         type: string
 jobs:
-  create-branch:
+  main-job:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -15,4 +15,7 @@ jobs:
         with:
           node-version: 15
       - run: git checkout -b version/${{ github.event.inputs.version }}
+      - run: ./.github/scripts/set_packages_version.sh ${{ github.event.inputs.version }}
       - run: git push --set-upstream origin version/${{ github.event.inputs.version }}
+
+
