@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: version of the npm package you want to deploy
+        description: version of the npm packages you want to publish
         required: true
         type: string
 jobs:
@@ -21,6 +21,7 @@ jobs:
       - run: git commit -a -m "Set packages version to ${{ github.event.inputs.version }}"
       - run: git push --set-upstream origin version/${{ github.event.inputs.version }}
   publish-destination-packages:
+    # https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages#publishing-packages-to-the-npm-registry
     needs: create-branch
     strategy:
       matrix:
@@ -36,7 +37,9 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 15
+          registry-url: 'https://registry.npmjs.org'
       - run: npm install
       - run: npm run build
       - run: npm run deploy
-
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
