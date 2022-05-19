@@ -1,6 +1,6 @@
 {
   "name": "@datatoggle/datatoggle-sdk",
-  "version": "NPM_VERSION_SDK",
+  "version": "0.0.6",
   "description": "Datatoggle SDK",
   "main": "lib/index.js",
   "scripts": {

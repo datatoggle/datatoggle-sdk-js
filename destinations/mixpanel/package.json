@@ -1,6 +1,6 @@
 {
   "name": "@datatoggle/mixpanel",
-  "version": "NPM_VERSION_DESTINATION",
+  "version": "0.0.6",
   "description": "Datatoggle integration of mixpanel",
   "main": "dist/index.js",
   "scripts": {
