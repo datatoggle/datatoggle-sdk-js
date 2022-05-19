@@ -1,6 +1,6 @@
 {
   "name": "@datatoggle/destination-interface",
-  "version": "1.0.0",
+  "version": "NPM_VERSION_INTERFACE",
   "description": "Datatoggle interface to be implemented by destinations",
   "main": "lib/index.js",
   "scripts": {

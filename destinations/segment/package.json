@@ -1,6 +1,6 @@
 {
   "name": "@datatoggle/segment",
-  "version": "1.0.1",
+  "version": "NPM_VERSION_DESTINATION",
   "description": "Datatoggle integration of segment",
   "main": "dist/index.js",
   "scripts": {
