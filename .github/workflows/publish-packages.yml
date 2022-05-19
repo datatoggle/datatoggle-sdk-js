@@ -7,7 +7,7 @@ on:
         required: true
         type: string
 jobs:
-  main-job:
+  create-branch:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -20,5 +20,23 @@ jobs:
       - run: git config user.email "<>"
       - run: git commit -a -m "Set packages version to ${{ github.event.inputs.version }}"
       - run: git push --set-upstream origin version/${{ github.event.inputs.version }}
-
+  publish-destination-packages:
+    needs: create-branch
+    strategy:
+      matrix:
+        destination_name: ['mixpanel', 'segment']
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: destinations/${{ matrix.destination_name }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: version/${{ github.event.inputs.version }}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 15
+      - run: npm install
+      - run: npm run build
+      - run: npm run deploy
 
