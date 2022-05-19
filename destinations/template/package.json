@@ -1,6 +1,6 @@
 {
   "name": "@datatoggle/__destination__",
-  "version": "NPM_VERSION_DESTINATION",
+  "version": "0.0.4",
   "description": "Datatoggle integration of __destination__",
   "main": "dist/index.js",
   "scripts": {
